@@ -3,10 +3,8 @@ package com.sa.githubers.ui.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,6 +41,7 @@ fun SearchFieldComponent(
     Card(Modifier.padding(MaterialTheme.dimens.medium)) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TextField(
+                maxLines = 1,
                 value = searchText,
                 onValueChange = onValueChange,
                 label = { Text(text = "Search") },
@@ -75,7 +74,10 @@ fun UsersList(userList: List<UserItemUiModel>, onUserClicked: (login: String) ->
 fun UserItem(user: UserItemUiModel, onUserClicked: (login: String) -> Unit) {
     Card(
         Modifier
-            .padding(horizontal = MaterialTheme.dimens.medium, vertical = MaterialTheme.dimens.small)
+            .padding(
+                horizontal = MaterialTheme.dimens.medium,
+                vertical = MaterialTheme.dimens.small
+            )
             .clickable { onUserClicked(user.login) }) {
         Row(
             Modifier

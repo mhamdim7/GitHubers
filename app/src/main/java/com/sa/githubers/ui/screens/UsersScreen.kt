@@ -1,5 +1,6 @@
 package com.sa.githubers.ui.screens
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -8,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.ui.components.EmptyStateComponent
@@ -25,9 +28,16 @@ fun UsersScreen(
 ) {
     val searchText by viewModel.searchText.collectAsState()
     val usersResponse by viewModel.users.collectAsState()
+    val focusManager = LocalFocusManager.current
 
     Surface(modifier = Modifier.fillMaxSize(), color = colorScheme.background) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }) {
             SearchFieldComponent(
                 searchText = searchText,
                 onValueChange = { viewModel.onSearchTextChange(it) })
