@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GitHubers</string>
+    <string name="user_avatar_content_description">User avatar</string>
+    <string name="loading">Loading...</string>
+    <string name="error_text">Ooops! %1$s</string>
+    <string name="no_users_found">No Users Found</string>
+    <string name="hirable">Hirable</string>
+    <string name="not_hirable">Not Hirable</string>
+    <string name="repositories">Repositories:</string>
+</resources>
