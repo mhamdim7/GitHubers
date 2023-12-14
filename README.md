@@ -5,6 +5,7 @@ GitHub User Viewer is an Android application that utilizes the GitHub REST API t
 
 - [Tech Stack](#description)
 - [UX](#ux)
+- [Info](#info)
 
 ## Tech Stack
 
@@ -12,4 +13,8 @@ This Android app utilizes Dagger Hilt for dependency injection, Jetpack Compose 
 
 ## UX
 
-The app is designed with a very basic interface to provide a straightforward experience when searching for and viewing GitHub users. It incorporates error handling for various situations and loading states to indicate ongoing operations.
+The app is designed with a very basic interface and supports Dark and Light modes and adapting to Android themes' color palettes, it provides a straightforward experience when searching for and viewing GitHub users. It incorporates error handling for various situations and loading states to indicate ongoing operations, 
+
+## Info
+
+The app manages errors like 403 due to query limits (60 queries/IP/hour) on GitHub's API. It continues to return errors until accessed from a different network or after one hour.
