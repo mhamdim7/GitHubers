@@ -1,6 +1,8 @@
 package com.sa.githubers.ui.components
 
+
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,7 +37,11 @@ import com.sa.githubers.ui.theme.dimens
 fun DetailsHeader(details: UserDetailsUiModel) {
     val hirable =
         if (details.hireable) stringResource(R.string.hirable) else stringResource(R.string.not_hirable)
-    Card(Modifier.padding(MaterialTheme.dimens.large)) {
+    Card(
+        Modifier.padding(
+            horizontal = MaterialTheme.dimens.verySmall
+        )
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -54,33 +60,39 @@ fun DetailsHeader(details: UserDetailsUiModel) {
                     .clip(CircleShape)
                     .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
             )
-            Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
-            Text(
-                details.name ?: "",
-                style = MaterialTheme.typography.titleLarge
-            )
+            details.name?.let {
+                Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
+                Text(
+                    it,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
             Spacer(modifier = Modifier.height(MaterialTheme.dimens.small))
             Text(
                 hirable,
                 style = MaterialTheme.typography.bodySmall
             )
+            details.location?.let {
+                Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
             Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
-            Text(
-                details.location ?: "",
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
-            Text(
-                details.bio ?: "",
-                style = MaterialTheme.typography.bodySmall
-            )
+            details.bio?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }
 
 @Composable
 fun ReposList(items: List<RepoItemUiModel>) {
-    LazyColumn {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.medium)) {
         items(
             count = items.size,
             key = { items[it].id },
@@ -96,19 +108,22 @@ fun RepoItem(
     items: List<RepoItemUiModel>,
     it: Int
 ) {
-    Card(Modifier.padding(MaterialTheme.dimens.small)) {
+    Card {
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.dimens.medium, vertical = MaterialTheme.dimens.small)
+                .padding(
+                    horizontal = MaterialTheme.dimens.medium,
+                    vertical = MaterialTheme.dimens.small
+                )
                 .wrapContentHeight()
         ) {
             Text(
                 items[it].name,
                 style = MaterialTheme.typography.bodyLarge
             )
-            Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
+            Spacer(modifier = Modifier.height(MaterialTheme.dimens.small))
             Text(
                 items[it].description ?: "",
                 style = MaterialTheme.typography.bodyMedium
@@ -121,7 +136,7 @@ fun RepoItem(
 fun ReposTitle() {
     Card(
         Modifier
-            .padding(MaterialTheme.dimens.small),
+            .padding(MaterialTheme.dimens.medium),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary.copy(0.75f),
         )
@@ -130,12 +145,16 @@ fun ReposTitle() {
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.dimens.medium, vertical = MaterialTheme.dimens.small)
+                .padding(
+                    horizontal = MaterialTheme.dimens.medium,
+                    vertical = MaterialTheme.dimens.small
+                )
                 .wrapContentHeight(),
         ) {
             Text(
                 text = stringResource(R.string.repositories),
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
