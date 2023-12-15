@@ -11,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,10 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UsersViewModel @Inject constructor(private val usersUseCase: UsersUseCase) : ViewModel() {
 
-    private val _users =
-        MutableStateFlow<ResourceState<List<UserItemUiModel>>>(ResourceState.Idle())
+    private val _users = MutableStateFlow<ResourceState<List<UserItemUiModel>>>(
+        ResourceState.Idle()
+    )
     private val _searchText = MutableStateFlow("")
-    val users: StateFlow<ResourceState<List<UserItemUiModel>>> = _users
+    val users = _users.asStateFlow()
     val searchText = _searchText.asStateFlow()
 
     fun onSearchTextChange(query: String) {

@@ -13,7 +13,7 @@ import com.sa.githubers.ui.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,13 +24,15 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _userDetails =
-        MutableStateFlow<ResourceState<UserDetailsUiModel>>(ResourceState.Idle())
-    val userDetails: StateFlow<ResourceState<UserDetailsUiModel>> = _userDetails
+    private val _userDetails = MutableStateFlow<ResourceState<UserDetailsUiModel>>(
+        ResourceState.Idle()
+    )
+    val userDetails = _userDetails.asStateFlow()
 
-    private val _repos =
-        MutableStateFlow<ResourceState<List<RepoItemUiModel>>>(ResourceState.Idle())
-    val repos: StateFlow<ResourceState<List<RepoItemUiModel>>> = _repos
+    private val _repos = MutableStateFlow<ResourceState<List<RepoItemUiModel>>>(
+        ResourceState.Idle()
+    )
+    val repos = _repos.asStateFlow()
 
     init {
         val userLogin = savedStateHandle[Routes.DETAILS_SCREEN_KEY] ?: ""
