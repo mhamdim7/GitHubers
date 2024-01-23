@@ -1,4 +1,4 @@
-# GitHuers
+# GitHubers
 
 GitHuers is an Android application that utilizes the GitHub REST API to search for users based on a provided keyword. It presents a list of matching profiles based on the search term, and tapping on a profile reveals more details.
 ## Table of Contents
