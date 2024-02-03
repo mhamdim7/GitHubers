@@ -36,7 +36,7 @@ class DetailsViewModelTest {
 
     @Before
     fun setUp() {
-        userDetailUseCase = mockk()
+        userDetailUseCase = mockk(relaxed = true)
     }
 
     @Test

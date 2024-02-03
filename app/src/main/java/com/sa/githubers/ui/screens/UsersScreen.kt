@@ -1,18 +1,22 @@
 package com.sa.githubers.ui.screens
 
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sa.githubers.domain.resourceloader.ResourceState
+import com.sa.githubers.ui.components.AnimatedSearchIcon
 import com.sa.githubers.ui.components.EmptyStateComponent
 import com.sa.githubers.ui.components.ErrorComponent
 import com.sa.githubers.ui.components.InfinitelyFlowingCircles
@@ -43,7 +47,16 @@ fun UsersScreen(
                 onValueChange = { viewModel.onSearchTextChange(it) })
             when (val users = usersResponse) {
 
-                is ResourceState.Idle -> InfinitelyFlowingCircles()
+                is ResourceState.Idle -> {
+                    Box(
+                        modifier = Modifier
+                            .wrapContentSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        InfinitelyFlowingCircles()
+                        AnimatedSearchIcon()
+                    }
+                }
 
                 is ResourceState.Loading -> ProgressLoader()
 

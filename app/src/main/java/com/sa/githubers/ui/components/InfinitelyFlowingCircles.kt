@@ -1,6 +1,11 @@
 package com.sa.githubers.ui.components
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -10,8 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import com.sa.githubers.ui.screens.UsersScreen
 
-
+/**
+ * Appears in [UsersScreen]
+ */
 @Composable
 fun InfinitelyFlowingCircles() {
 
@@ -85,14 +93,15 @@ private fun scaleInfiniteTransition(
     targetValue: Float,
     durationMillis: Int,
 ): Float {
-    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val label = ""
+    val infiniteTransition = rememberInfiniteTransition(label)
     val scale: Float by infiniteTransition.animateFloat(
         initialValue = initialValue,
         targetValue = targetValue,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
-        ), label = ""
+        ), label
     )
     return scale
 }

@@ -44,7 +44,7 @@ fun SearchFieldComponent(
                 maxLines = 1,
                 value = searchText,
                 onValueChange = onValueChange,
-                label = { Text(text = "Search") },
+                label = { Text(text = stringResource(R.string.start_typing_to_search)) },
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.TwoTone.Search,
