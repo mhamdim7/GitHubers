@@ -11,6 +11,11 @@ GitHuers is an Android application that utilizes the GitHub REST API to search f
 
 This Android app utilizes Dagger Hilt for dependency injection, Jetpack Compose for UI, Coroutines for asynchronous tasks, Navigation Component for app navigation, Retrofit for API requests, and follows MVVM architecture with Clean Architecture principles.
 
+| Network |  | Data source |  | ViewModels |  | Screens |
+| :-:     | :-:     | :-:     | :-:    | :-:     | :-:     | :-:     |
+| `Data`<br> :gift::gift:<br> :gift::gift: | **--->** | `Source`<br> :gift: | **--->**<br>`Suspend` | `Coroutines`<br> :curly_loop::curly_loop: | **--->**<br>`State` | `Composables`<br>:iphone::iphone:<br>:iphone::iphone: |
+
+
 ## UX
 
 The app is designed with a very basic interface and supports Dark and Light modes and adapting to Android themes' color palettes, it provides a straightforward experience when searching for and viewing GitHub users. It incorporates error handling for various situations and loading states to indicate ongoing operations, 
