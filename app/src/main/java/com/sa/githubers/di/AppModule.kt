@@ -60,13 +60,11 @@ class AppModule {
     }
 
     @Provides
-    @Singleton
     fun providesUsersUseCase(dataSource: DataSource): UsersUseCase {
         return UsersUseCase(dataSource)
     }
 
     @Provides
-    @Singleton
     fun providesUserDetailUseCase(dataSource: DataSource): UserDetailUseCase {
         return UserDetailUseCase(dataSource)
     }
