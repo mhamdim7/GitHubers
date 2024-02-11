@@ -1,4 +1,4 @@
-package com.sa.githubers.ui
+package com.sa.githubers.ui.model
 
 
 data class UserItemUiModel(

@@ -1,11 +1,11 @@
 package com.sa.githubers.ui.viewmodel
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sa.githubers.data.entity.UserEntry
-import com.sa.githubers.data.entity.UsersResponse
+import com.sa.githubers.data.model.UserEntry
+import com.sa.githubers.data.model.UsersResponse
 import com.sa.githubers.domain.resourceloader.ResourceState
-import com.sa.githubers.domain.usecases.UsersUseCase
-import com.sa.githubers.ui.UserItemUiModel
+import com.sa.githubers.domain.usecases.UserListUseCase
+import com.sa.githubers.ui.model.UserItemUiModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,13 +24,13 @@ class UsersViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var usersUseCase: UsersUseCase
+    private lateinit var userListUseCase: UserListUseCase
     private lateinit var viewModel: UsersViewModel
 
     @Before
     fun setup() {
-        usersUseCase = mockk()
-        viewModel = UsersViewModel(usersUseCase)
+        userListUseCase = mockk()
+        viewModel = UsersViewModel(userListUseCase)
     }
 
     @Test
@@ -57,7 +57,7 @@ class UsersViewModelTest {
             val mockedResponse = flow {
                 emit(ResourceState.Success(mockedUsersResponse))
             }
-            coEvery { usersUseCase.getUsers(query) } returns mockedResponse
+            coEvery { userListUseCase.getUsers(query) } returns mockedResponse
 
             // When
             viewModel.onSearchTextChange(query)
@@ -76,7 +76,7 @@ class UsersViewModelTest {
         val mockedResponse = flow {
             emit(ResourceState.Success(UsersResponse(emptyList())))
         }
-        coEvery { usersUseCase.getUsers(query) } returns mockedResponse
+        coEvery { userListUseCase.getUsers(query) } returns mockedResponse
 
         // When
         viewModel.onSearchTextChange(query)

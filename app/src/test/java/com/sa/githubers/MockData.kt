@@ -1,10 +1,10 @@
 package com.sa.githubers
 
-import com.sa.githubers.data.entity.ProfileResponse
-import com.sa.githubers.data.entity.RepoEntry
+import com.sa.githubers.data.model.UserDetailsResponse
+import com.sa.githubers.data.model.UserRepoResponse
 
 object MockData {
-    fun mockProfileResponse(login: String) = ProfileResponse(
+    fun mockProfileResponse(login: String) = UserDetailsResponse(
         login = login,
         id = 1,
         avatarUrl = "someUrl",
@@ -13,7 +13,7 @@ object MockData {
         bio = "someBio"
     )
 
-    fun mockUserProfileResponse(login: String) = ProfileResponse(
+    fun mockUserProfileResponse(login: String) = UserDetailsResponse(
         login = login,
         id = 1,
         avatarUrl = "someUrl",
@@ -22,8 +22,8 @@ object MockData {
         bio = "someBio"
     )
 
-    fun mockRepoEntryList(): List<RepoEntry> = listOf(
-        RepoEntry(
+    fun mockRepoEntryList(): List<UserRepoResponse> = listOf(
+        UserRepoResponse(
             id = 1,
             name = "someName",
             private = false,

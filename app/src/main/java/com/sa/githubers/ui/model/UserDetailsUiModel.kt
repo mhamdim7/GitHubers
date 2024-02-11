@@ -1,4 +1,4 @@
-package com.sa.githubers.ui
+package com.sa.githubers.ui.model
 
 data class UserDetailsUiModel(
     val login: String,
@@ -8,11 +8,4 @@ data class UserDetailsUiModel(
     val name: String? = null,
     val bio: String? = null,
     val hireable: Boolean
-)
-
-data class RepoItemUiModel(
-    val id: Int,
-    val name: String,
-    val private: Boolean,
-    val description: String? = null
 )

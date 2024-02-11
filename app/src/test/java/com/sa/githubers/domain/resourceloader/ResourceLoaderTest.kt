@@ -2,7 +2,7 @@ package com.sa.githubers.domain.resourceloader
 
 import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.NetworkResult
-import com.sa.githubers.data.entity.UsersResponse
+import com.sa.githubers.data.model.UsersResponse
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
@@ -29,11 +29,11 @@ class ResourceLoaderTest {
         val userDetails = UsersResponse(listOf())
         val mockResponse = NetworkResult.Success(userDetails)
 
-        coEvery { dataSource.getUsers(userId) }
+        coEvery { dataSource.getUserList(userId) }
             .returns(mockResponse)
 
         val resourceFlow = resourceFlow {
-            dataSource.getUsers(userId)
+            dataSource.getUserList(userId)
         }
 
         val result = resourceFlow.toList()
@@ -44,11 +44,11 @@ class ResourceLoaderTest {
     @Test
     fun `test loadResource failure`() = runBlocking {
 
-        coEvery { dataSource.getUsers(userId) }
+        coEvery { dataSource.getUserList(userId) }
             .throws(Exception(errorMessage))
 
         val resourceFlow = resourceFlow {
-            dataSource.getUsers(userId)
+            dataSource.getUserList(userId)
         }
 
         val result = resourceFlow.toList()

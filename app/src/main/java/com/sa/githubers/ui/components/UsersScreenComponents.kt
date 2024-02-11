@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sa.githubers.R
-import com.sa.githubers.ui.UserItemUiModel
+import com.sa.githubers.ui.model.UserItemUiModel
 import com.sa.githubers.ui.theme.dimens
 
 @Composable

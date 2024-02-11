@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sa.githubers.R
-import com.sa.githubers.ui.RepoItemUiModel
-import com.sa.githubers.ui.UserDetailsUiModel
+import com.sa.githubers.ui.model.UserRepoUiModel
+import com.sa.githubers.ui.model.UserDetailsUiModel
 import com.sa.githubers.ui.theme.dimens
 
 
@@ -91,7 +91,7 @@ fun DetailsHeader(details: UserDetailsUiModel) {
 }
 
 @Composable
-fun ReposList(items: List<RepoItemUiModel>) {
+fun ReposList(items: List<UserRepoUiModel>) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.medium)) {
         items(
             count = items.size,
@@ -105,7 +105,7 @@ fun ReposList(items: List<RepoItemUiModel>) {
 
 @Composable
 fun RepoItem(
-    items: List<RepoItemUiModel>,
+    items: List<UserRepoUiModel>,
     it: Int
 ) {
     Card {

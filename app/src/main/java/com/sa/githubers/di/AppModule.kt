@@ -5,8 +5,14 @@ import com.sa.githubers.data.NetworkInterceptor
 import com.sa.githubers.data.api.ApiService
 import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.datasource.DataSourceImpl
+import com.sa.githubers.data.mapper.UserDetailsDataDomainMapper
+import com.sa.githubers.data.mapper.UserListDataDomainMapper
+import com.sa.githubers.data.mapper.UserRepoDataDomainMapper
 import com.sa.githubers.domain.usecases.UserDetailUseCase
-import com.sa.githubers.domain.usecases.UsersUseCase
+import com.sa.githubers.domain.usecases.UserListUseCase
+import com.sa.githubers.ui.mapper.UserDetailsDomainUiMapper
+import com.sa.githubers.ui.mapper.UserRepoDomainUiMapper
+import com.sa.githubers.ui.mapper.UsersDomainUiMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -23,6 +29,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    // TODO : split this class into smaller modules
 
     @Provides
     @Singleton
@@ -53,15 +61,53 @@ class AppModule {
         return retrofit.create(ApiService::class.java)
     }
 
+    // Data to Domain mappers
     @Provides
-    @Singleton
-    fun providesDataSource(apiService: ApiService): DataSource {
-        return DataSourceImpl(apiService)
+    fun providesUserListDataDomainMapper(): UserListDataDomainMapper {
+        return UserListDataDomainMapper()
     }
 
     @Provides
-    fun providesUsersUseCase(dataSource: DataSource): UsersUseCase {
-        return UsersUseCase(dataSource)
+    fun providesUserDetailsDataDomainMapper(): UserDetailsDataDomainMapper {
+        return UserDetailsDataDomainMapper()
+    }
+
+    @Provides
+    fun providesUserRepoDataDomainMapper(): UserRepoDataDomainMapper {
+        return UserRepoDataDomainMapper()
+    }
+
+    // Domain to Ui mappers
+    @Provides
+    fun providesUserListDomainUiMapper(): UsersDomainUiMapper {
+        return UsersDomainUiMapper()
+    }
+
+    @Provides
+    fun providesUserDetailsDomainUiMapper(): UserDetailsDomainUiMapper {
+        return UserDetailsDomainUiMapper()
+    }
+
+    @Provides
+    fun providesUserRepoDomainUiMapper(): UserRepoDomainUiMapper {
+        return UserRepoDomainUiMapper()
+    }
+
+    // Data source mappers
+    @Provides
+    @Singleton
+    fun providesDataSource(
+        apiService: ApiService,
+        userListMapper: UserListDataDomainMapper,
+        userDetailsMapper: UserDetailsDataDomainMapper,
+        userRepoMapper: UserRepoDataDomainMapper
+    ): DataSource {
+        return DataSourceImpl(apiService, userListMapper, userDetailsMapper, userRepoMapper)
+    }
+
+    @Provides
+    fun providesUserListUseCase(dataSource: DataSource): UserListUseCase {
+        return UserListUseCase(dataSource)
     }
 
     @Provides

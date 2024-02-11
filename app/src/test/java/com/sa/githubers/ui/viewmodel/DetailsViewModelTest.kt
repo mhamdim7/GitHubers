@@ -4,12 +4,12 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.sa.githubers.MockData.mockRepoEntryList
 import com.sa.githubers.MockData.mockUserProfileResponse
-import com.sa.githubers.data.entity.ProfileResponse
-import com.sa.githubers.data.entity.RepoEntry
+import com.sa.githubers.data.model.UserDetailsResponse
+import com.sa.githubers.data.model.UserRepoResponse
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.domain.usecases.UserDetailUseCase
-import com.sa.githubers.ui.RepoItemUiModel
-import com.sa.githubers.ui.UserDetailsUiModel
+import com.sa.githubers.ui.model.UserRepoUiModel
+import com.sa.githubers.ui.model.UserDetailsUiModel
 import com.sa.githubers.ui.navigation.Routes
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -64,7 +64,7 @@ class DetailsViewModelTest {
     fun `fetch user details - loading`() = runBlocking {
         // Given
         val userDetailsFlow = MutableStateFlow(
-            ResourceState.Loading<ProfileResponse>()
+            ResourceState.Loading<UserDetailsResponse>()
         )
         coEvery { userDetailUseCase.getUserProfile(userLogin) } returns userDetailsFlow
         // When
@@ -78,7 +78,7 @@ class DetailsViewModelTest {
     @Test
     fun `fetch user details - error`() = runBlocking {
         // Given
-        val userDetailsFlow = MutableStateFlow<ResourceState<ProfileResponse>>(
+        val userDetailsFlow = MutableStateFlow<ResourceState<UserDetailsResponse>>(
             ResourceState.Error(error)
         )
         coEvery { userDetailUseCase.getUserProfile(userLogin) } returns userDetailsFlow
@@ -97,7 +97,7 @@ class DetailsViewModelTest {
         val repoListUiModel = repoList.map { toRepoUiModel(it) }
 
         //WHen
-        val repoListFlow = MutableStateFlow<ResourceState<List<RepoEntry>>>(
+        val repoListFlow = MutableStateFlow<ResourceState<List<UserRepoResponse>>>(
             ResourceState.Success(repoList)
         )
         coEvery { userDetailUseCase.getUserRepos(userLogin) } returns repoListFlow
@@ -114,7 +114,7 @@ class DetailsViewModelTest {
     fun `fetch user repos - loading`() = runBlocking {
         // Given
         val repoListFlow = MutableStateFlow(
-            ResourceState.Loading<List<RepoEntry>>()
+            ResourceState.Loading<List<UserRepoResponse>>()
         )
         coEvery { userDetailUseCase.getUserRepos(userLogin) } returns repoListFlow
         //When
@@ -123,13 +123,13 @@ class DetailsViewModelTest {
 
         //Then
         val actualState = viewModel.repos.value
-        assertTrue(actualState is ResourceState.Loading<List<RepoItemUiModel>>)
+        assertTrue(actualState is ResourceState.Loading<List<UserRepoUiModel>>)
     }
 
     @Test
     fun `fetch user repos - error`() = runBlocking {
         // Given
-        val repoListFlow = MutableStateFlow<ResourceState<List<RepoEntry>>>(
+        val repoListFlow = MutableStateFlow<ResourceState<List<UserRepoResponse>>>(
             ResourceState.Error(error)
         )
 
@@ -140,12 +140,12 @@ class DetailsViewModelTest {
         delay(1050)
         // Then
         val actualState = viewModel.repos.value
-        assertEquals(ResourceState.Error<List<RepoItemUiModel>>(error), actualState)
+        assertEquals(ResourceState.Error<List<UserRepoUiModel>>(error), actualState)
     }
 
 
     // could be in a Mapper class
-    private fun toUserDetailsUiModel(it: ProfileResponse) =
+    private fun toUserDetailsUiModel(it: UserDetailsResponse) =
         UserDetailsUiModel(
             it.login,
             it.id,
@@ -156,8 +156,8 @@ class DetailsViewModelTest {
             false
         )
 
-    private fun toRepoUiModel(repo: RepoEntry) =
-        RepoItemUiModel(
+    private fun toRepoUiModel(repo: UserRepoResponse) =
+        UserRepoUiModel(
             repo.id,
             repo.name,
             repo.private,

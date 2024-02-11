@@ -1,4 +1,4 @@
-package com.sa.githubers.data.entity
+package com.sa.githubers.data.model
 
 import com.squareup.moshi.Json
 

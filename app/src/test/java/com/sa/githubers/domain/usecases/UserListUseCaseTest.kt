@@ -2,9 +2,8 @@ package com.sa.githubers.domain.usecases
 
 import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.NetworkResult
-import com.sa.githubers.data.entity.UsersResponse
+import com.sa.githubers.data.model.UsersResponse
 import com.sa.githubers.domain.resourceloader.ResourceState
-import com.sa.githubers.domain.usecases.UsersUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -12,16 +11,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class UsersUseCaseTest {
+class UserListUseCaseTest {
 
     private lateinit var dataSource: DataSource
-    private lateinit var usersUseCase: UsersUseCase
+    private lateinit var userListUseCase: UserListUseCase
     private val query = "Query"
 
     @Before
     fun setUp() {
         dataSource = mockk()
-        usersUseCase = UsersUseCase(dataSource)
+        userListUseCase = UserListUseCase(dataSource)
     }
 
 
@@ -30,10 +29,10 @@ class UsersUseCaseTest {
         // Given
 
         val mockUsersResponse = UsersResponse(listOf())
-        coEvery { dataSource.getUsers(any()) } returns NetworkResult.Success(mockUsersResponse)
+        coEvery { dataSource.getUserList(any()) } returns NetworkResult.Success(mockUsersResponse)
 
         // When
-        val userProfileFlow = usersUseCase.getUsers(query)
+        val userProfileFlow = userListUseCase.getUsers(query)
 
         // then
         userProfileFlow.collect { result ->
@@ -52,10 +51,10 @@ class UsersUseCaseTest {
     fun `getUsers fail`() = runBlocking {
         // Given
         val errorMessage = "Error message"
-        coEvery { dataSource.getUsers(any()) } returns NetworkResult.Error(401, errorMessage)
+        coEvery { dataSource.getUserList(any()) } returns NetworkResult.Error(401, errorMessage)
 
         // When
-        val userListFlow = usersUseCase.getUsers(query)
+        val userListFlow = userListUseCase.getUsers(query)
 
         // then
         userListFlow.collect { result ->

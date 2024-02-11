@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class UserDetailUseCase @Inject constructor(private val dataSource: DataSource) {
 
-    suspend fun getUserProfile(login: String) = resourceFlow { dataSource.getProfile(login) }
+    suspend fun getUserProfile(login: String) = resourceFlow { dataSource.getUserDetails(login) }
 
-    suspend fun getUserRepos(login: String) = resourceFlow { dataSource.getRepos(login) }
+    suspend fun getUserRepos(login: String) = resourceFlow { dataSource.getUserRepos(login) }
 }

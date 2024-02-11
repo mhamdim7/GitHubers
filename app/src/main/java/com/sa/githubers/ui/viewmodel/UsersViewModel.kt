@@ -3,10 +3,10 @@ package com.sa.githubers.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sa.githubers.AppConstants.THROTTLE_DURATION
-import com.sa.githubers.data.entity.UserEntry
 import com.sa.githubers.domain.resourceloader.ResourceState
-import com.sa.githubers.domain.usecases.UsersUseCase
-import com.sa.githubers.ui.UserItemUiModel
+import com.sa.githubers.domain.usecases.UserListUseCase
+import com.sa.githubers.ui.model.UserItemUiModel
+import com.sa.githubers.ui.mapper.UsersDomainUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,7 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UsersViewModel @Inject constructor(private val usersUseCase: UsersUseCase) : ViewModel() {
+class UsersViewModel @Inject constructor(
+    private val userListUseCase: UserListUseCase,
+    private val mapper: UsersDomainUiMapper
+) : ViewModel() {
 
     private val _users = MutableStateFlow<ResourceState<List<UserItemUiModel>>>(
         ResourceState.Idle()
@@ -34,13 +37,8 @@ class UsersViewModel @Inject constructor(private val usersUseCase: UsersUseCase)
 
     private fun getUsers(query: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(THROTTLE_DURATION)
-        usersUseCase.getUsers(query).collectLatest { users ->
-            _users.value = users.mapSuccess {
-                it.items.map { entry -> entry.toUiModel() }
-            }
+        userListUseCase.getUsers(query).collectLatest { users ->
+            _users.value = mapper.mapFrom(users)
         }
     }
-
-    private fun UserEntry.toUiModel() =
-        UserItemUiModel(login, type, id, avatarUrl)
 }

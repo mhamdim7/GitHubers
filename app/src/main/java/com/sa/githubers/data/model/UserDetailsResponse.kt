@@ -1,8 +1,8 @@
-package com.sa.githubers.data.entity
+package com.sa.githubers.data.model
 
 import com.squareup.moshi.Json
 
-data class ProfileResponse(
+data class UserDetailsResponse(
     val login: String,
     val id: Int,
     @Json(name = "avatar_url")
@@ -14,9 +14,3 @@ data class ProfileResponse(
     val hireable: Boolean? = null
 )
 
-data class RepoEntry(
-    val id: Int,
-    val name: String,
-    val private: Boolean,
-    val description: String? = null
-)

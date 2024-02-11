@@ -3,7 +3,7 @@ package com.sa.githubers.domain.usecases
 import com.sa.githubers.MockData.mockProfileResponse
 import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.NetworkResult
-import com.sa.githubers.data.entity.RepoEntry
+import com.sa.githubers.data.model.UserRepoResponse
 import com.sa.githubers.domain.resourceloader.ResourceState
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -29,7 +29,7 @@ class UserDetailUseCaseTest {
     fun `getUserProfile success`() = runBlocking {
         // given
         val userProfile = mockProfileResponse(login)
-        coEvery { dataSource.getProfile(login) } returns NetworkResult.Success(userProfile)
+        coEvery { dataSource.getUserDetails(login) } returns NetworkResult.Success(userProfile)
 
         // when
         val userProfileFlow = userDetailUseCase.getUserProfile(login)
@@ -50,7 +50,7 @@ class UserDetailUseCaseTest {
     @Test
     fun `getUserProfile error`() = runBlocking {
         // Given
-        coEvery { dataSource.getProfile(login) } returns NetworkResult.Error(404, errorMessage)
+        coEvery { dataSource.getUserDetails(login) } returns NetworkResult.Error(404, errorMessage)
 
         // When
         val userProfileFlow = userDetailUseCase.getUserProfile(login)
@@ -71,8 +71,8 @@ class UserDetailUseCaseTest {
     @Test
     fun `getUserRepos success`() = runBlocking {
         // given
-        val repoList = listOf<RepoEntry>()
-        coEvery { dataSource.getRepos(login) } returns NetworkResult.Success(repoList)
+        val repoList = listOf<UserRepoResponse>()
+        coEvery { dataSource.getUserRepos(login) } returns NetworkResult.Success(repoList)
 
         // when
         val repoListFlow = userDetailUseCase.getUserRepos(login)
@@ -93,7 +93,7 @@ class UserDetailUseCaseTest {
     @Test
     fun `getUserRepos error`() = runBlocking {
         // Given
-        coEvery { dataSource.getRepos(login) } returns NetworkResult.Error(404, errorMessage)
+        coEvery { dataSource.getUserRepos(login) } returns NetworkResult.Error(404, errorMessage)
 
         // When
         val repoListFlow = userDetailUseCase.getUserRepos(login)
