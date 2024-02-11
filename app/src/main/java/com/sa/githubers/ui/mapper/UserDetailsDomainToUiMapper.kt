@@ -5,7 +5,7 @@ import com.sa.githubers.domain.model.UserDetails
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.ui.model.UserDetailsUiModel
 
-class UserDetailsDomainUiMapper :
+class UserDetailsDomainToUiMapper :
     Mapper<ResourceState<UserDetails>, ResourceState<UserDetailsUiModel>> {
 
     override fun mapFrom(from: ResourceState<UserDetails>) = from.mapSuccess {
@@ -16,7 +16,7 @@ class UserDetailsDomainUiMapper :
             it.location,
             it.name,
             it.bio,
-            it.hireable ?: false
+            it.hireable
         )
     }
 }

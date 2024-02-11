@@ -6,7 +6,7 @@ import com.sa.githubers.data.model.UsersResponse
 import com.sa.githubers.domain.model.UserItem
 
 
-class UserListDataDomainMapper :
+class UserListDataToDomainMapper :
     Mapper<NetworkResult<UsersResponse>, NetworkResult<List<UserItem>>> {
     override fun mapFrom(from: NetworkResult<UsersResponse>) = from.mapSuccess { response ->
         response.items.map { UserItem(it.login, it.type, it.id, it.avatarUrl) }

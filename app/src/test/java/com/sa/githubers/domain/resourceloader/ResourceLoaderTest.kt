@@ -1,8 +1,10 @@
 package com.sa.githubers.domain.resourceloader
 
-import com.sa.githubers.data.datasource.DataSource
+import com.sa.githubers.FakeModels.Domain.fakeUserItem
 import com.sa.githubers.data.NetworkResult
+import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.model.UsersResponse
+import com.sa.githubers.domain.model.UserItem
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
@@ -26,8 +28,8 @@ class ResourceLoaderTest {
     @Test
     fun `test loadResource success`() = runBlocking {
 
-        val userDetails = UsersResponse(listOf())
-        val mockResponse = NetworkResult.Success(userDetails)
+        val userList = listOf(fakeUserItem())
+        val mockResponse = NetworkResult.Success(userList)
 
         coEvery { dataSource.getUserList(userId) }
             .returns(mockResponse)
@@ -37,8 +39,8 @@ class ResourceLoaderTest {
         }
 
         val result = resourceFlow.toList()
-        assertTrue(result[0] is ResourceState.Loading<UsersResponse>)
-        assertEquals(ResourceState.Success(userDetails), result[1])
+        assertTrue(result[0] is ResourceState.Loading<List<UserItem>>)
+        assertEquals(ResourceState.Success(userList), result[1])
     }
 
     @Test
@@ -52,7 +54,7 @@ class ResourceLoaderTest {
         }
 
         val result = resourceFlow.toList()
-        assertTrue(result[0] is ResourceState.Loading<UsersResponse>)
+        assertTrue(result[0] is ResourceState.Loading<List<UserItem>>)
         assertEquals(ResourceState.Error<UsersResponse>(errorMessage), result[1])
     }
 }

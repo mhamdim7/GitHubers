@@ -1,8 +1,8 @@
 package com.sa.githubers.domain.usecases
 
-import com.sa.githubers.data.datasource.DataSource
+import com.sa.githubers.FakeModels.Domain.fakeUserItem
 import com.sa.githubers.data.NetworkResult
-import com.sa.githubers.data.model.UsersResponse
+import com.sa.githubers.data.datasource.DataSourceImpl
 import com.sa.githubers.domain.resourceloader.ResourceState
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -13,7 +13,7 @@ import org.junit.Test
 
 class UserListUseCaseTest {
 
-    private lateinit var dataSource: DataSource
+    private lateinit var dataSource: DataSourceImpl
     private lateinit var userListUseCase: UserListUseCase
     private val query = "Query"
 
@@ -23,13 +23,14 @@ class UserListUseCaseTest {
         userListUseCase = UserListUseCase(dataSource)
     }
 
-
     @Test
     fun `getUsers success`() = runBlocking {
         // Given
 
-        val mockUsersResponse = UsersResponse(listOf())
-        coEvery { dataSource.getUserList(any()) } returns NetworkResult.Success(mockUsersResponse)
+        val userListNetworkResult = listOf(fakeUserItem())
+        coEvery { dataSource.getUserList(any()) } returns NetworkResult.Success(
+            userListNetworkResult
+        )
 
         // When
         val userProfileFlow = userListUseCase.getUsers(query)
@@ -39,7 +40,7 @@ class UserListUseCaseTest {
             when (result) {
 
                 is ResourceState.Success -> {
-                    assertEquals(mockUsersResponse, result.data)
+                    assertEquals(userListNetworkResult, result.data)
                 }
 
                 else -> {}

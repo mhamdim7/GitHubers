@@ -1,9 +1,9 @@
 package com.sa.githubers.domain.usecases
 
-import com.sa.githubers.MockData.mockProfileResponse
-import com.sa.githubers.data.datasource.DataSource
+import com.sa.githubers.FakeModels.Domain.fakeUserDetails
 import com.sa.githubers.data.NetworkResult
-import com.sa.githubers.data.model.UserRepoResponse
+import com.sa.githubers.data.datasource.DataSource
+import com.sa.githubers.domain.model.UserRepoItem
 import com.sa.githubers.domain.resourceloader.ResourceState
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -28,8 +28,10 @@ class UserDetailUseCaseTest {
     @Test
     fun `getUserProfile success`() = runBlocking {
         // given
-        val userProfile = mockProfileResponse(login)
-        coEvery { dataSource.getUserDetails(login) } returns NetworkResult.Success(userProfile)
+        val userDetailsNetworkResult = fakeUserDetails(login)
+        coEvery { dataSource.getUserDetails(login) } returns NetworkResult.Success(
+            userDetailsNetworkResult
+        )
 
         // when
         val userProfileFlow = userDetailUseCase.getUserProfile(login)
@@ -39,7 +41,7 @@ class UserDetailUseCaseTest {
             when (result) {
 
                 is ResourceState.Success -> {
-                    assertEquals(userProfile, result.data)
+                    assertEquals(userDetailsNetworkResult, result.data)
                 }
 
                 else -> {}
@@ -71,7 +73,7 @@ class UserDetailUseCaseTest {
     @Test
     fun `getUserRepos success`() = runBlocking {
         // given
-        val repoList = listOf<UserRepoResponse>()
+        val repoList = listOf<UserRepoItem>()
         coEvery { dataSource.getUserRepos(login) } returns NetworkResult.Success(repoList)
 
         // when

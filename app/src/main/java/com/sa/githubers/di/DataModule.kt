@@ -5,9 +5,9 @@ import com.sa.githubers.data.NetworkInterceptor
 import com.sa.githubers.data.api.ApiService
 import com.sa.githubers.data.datasource.DataSource
 import com.sa.githubers.data.datasource.DataSourceImpl
-import com.sa.githubers.data.mapper.UserDetailsDataDomainMapper
-import com.sa.githubers.data.mapper.UserListDataDomainMapper
-import com.sa.githubers.data.mapper.UserRepoDataDomainMapper
+import com.sa.githubers.data.mapper.UserDetailsDataToDomainMapper
+import com.sa.githubers.data.mapper.UserListDataToDomainMapper
+import com.sa.githubers.data.mapper.UserRepoDataToDomainMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -58,27 +58,27 @@ class DataModule {
     @Singleton
     fun providesDataSource(
         apiService: ApiService,
-        userListMapper: UserListDataDomainMapper,
-        userDetailsMapper: UserDetailsDataDomainMapper,
-        userRepoMapper: UserRepoDataDomainMapper
+        userListMapper: UserListDataToDomainMapper,
+        userDetailsMapper: UserDetailsDataToDomainMapper,
+        userRepoMapper: UserRepoDataToDomainMapper
     ): DataSource {
         return DataSourceImpl(apiService, userListMapper, userDetailsMapper, userRepoMapper)
     }
 
     // Data to Domain mappers
     @Provides
-    fun providesUserListDataDomainMapper(): UserListDataDomainMapper {
-        return UserListDataDomainMapper()
+    fun providesUserListDataDomainMapper(): UserListDataToDomainMapper {
+        return UserListDataToDomainMapper()
     }
 
     @Provides
-    fun providesUserDetailsDataDomainMapper(): UserDetailsDataDomainMapper {
-        return UserDetailsDataDomainMapper()
+    fun providesUserDetailsDataDomainMapper(): UserDetailsDataToDomainMapper {
+        return UserDetailsDataToDomainMapper()
     }
 
     @Provides
-    fun providesUserRepoDataDomainMapper(): UserRepoDataDomainMapper {
-        return UserRepoDataDomainMapper()
+    fun providesUserRepoDataDomainMapper(): UserRepoDataToDomainMapper {
+        return UserRepoDataToDomainMapper()
     }
 
     companion object {

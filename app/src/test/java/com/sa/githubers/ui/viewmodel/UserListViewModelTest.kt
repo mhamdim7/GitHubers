@@ -1,16 +1,17 @@
 package com.sa.githubers.ui.viewmodel
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sa.githubers.data.model.UserEntry
-import com.sa.githubers.data.model.UsersResponse
+import com.sa.githubers.FakeModels.Domain.fakeUserItem
+import com.sa.githubers.domain.model.UserItem
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.domain.usecases.UserListUseCase
+import com.sa.githubers.ui.mapper.UserListDomainToUiMapper
 import com.sa.githubers.ui.model.UserItemUiModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -19,18 +20,19 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class UsersViewModelTest {
+class UserListViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     private lateinit var userListUseCase: UserListUseCase
-    private lateinit var viewModel: UsersViewModel
+    private lateinit var viewModel: UserListViewModel
+    private val mapper = UserListDomainToUiMapper()
 
     @Before
     fun setup() {
         userListUseCase = mockk()
-        viewModel = UsersViewModel(userListUseCase)
+        viewModel = UserListViewModel(userListUseCase, mapper)
     }
 
     @Test
@@ -38,45 +40,27 @@ class UsersViewModelTest {
         runBlocking {
             // Given
             val query = "exampleQuery"
-            val mockedUsersResponse = UsersResponse(
-                listOf(
-                    UserEntry("user1", "type1", 1, "url1"),
-                    UserEntry("user2", "type2", 2, "url2")
-                )
-            )
-
-            val mockedUiModel = mockedUsersResponse.items.map {
-                UserItemUiModel(
-                    it.login,
-                    it.type,
-                    it.id,
-                    it.avatarUrl
-                )
-            }
-
-            val mockedResponse = flow {
-                emit(ResourceState.Success(mockedUsersResponse))
-            }
-            coEvery { userListUseCase.getUsers(query) } returns mockedResponse
+            val userList = ResourceState.Success(listOf(fakeUserItem()))
+            val userListFlow = MutableStateFlow(userList)
+            coEvery { userListUseCase.getUsers(query) } returns userListFlow
 
             // When
             viewModel.onSearchTextChange(query)
             delay(1050) // Allow some time for the viewModel to process
 
             // Then
-            assertTrue(viewModel.users.value is ResourceState.Success<List<UserItemUiModel>>)
-            val successState = viewModel.users.value as ResourceState.Success<List<UserItemUiModel>>
-            assertEquals(mockedUiModel, successState.data)
+            val successState = viewModel.users.value
+            val expected = mapper.mapFrom(userList)
+            assertEquals(expected, successState)
         }
 
     @Test
     fun `onSearchTextChange should not fetch users when query length is 1`(): Unit = runBlocking {
         // Given
         val query = "a"
-        val mockedResponse = flow {
-            emit(ResourceState.Success(UsersResponse(emptyList())))
-        }
-        coEvery { userListUseCase.getUsers(query) } returns mockedResponse
+        val userList = ResourceState.Success(listOf<UserItem>())
+        val userListFlow = MutableStateFlow(userList)
+        coEvery { userListUseCase.getUsers(query) } returns userListFlow
 
         // When
         viewModel.onSearchTextChange(query)

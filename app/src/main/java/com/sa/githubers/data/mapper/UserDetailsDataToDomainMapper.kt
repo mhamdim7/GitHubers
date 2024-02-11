@@ -5,7 +5,7 @@ import com.sa.githubers.data.NetworkResult
 import com.sa.githubers.data.model.UserDetailsResponse
 import com.sa.githubers.domain.model.UserDetails
 
-class UserDetailsDataDomainMapper :
+class UserDetailsDataToDomainMapper :
     Mapper<NetworkResult<UserDetailsResponse>, NetworkResult<UserDetails>> {
     override fun mapFrom(from: NetworkResult<UserDetailsResponse>) = from.mapSuccess {
         UserDetails(

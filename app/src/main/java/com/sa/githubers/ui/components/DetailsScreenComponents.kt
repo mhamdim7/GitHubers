@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sa.githubers.R
-import com.sa.githubers.ui.model.UserRepoUiModel
 import com.sa.githubers.ui.model.UserDetailsUiModel
+import com.sa.githubers.ui.model.UserRepoUiModel
 import com.sa.githubers.ui.theme.dimens
 
 

@@ -1,8 +1,8 @@
 package com.sa.githubers.di
 
-import com.sa.githubers.ui.mapper.UserDetailsDomainUiMapper
-import com.sa.githubers.ui.mapper.UserRepoDomainUiMapper
-import com.sa.githubers.ui.mapper.UsersDomainUiMapper
+import com.sa.githubers.ui.mapper.UserDetailsDomainToUiMapper
+import com.sa.githubers.ui.mapper.UserRepoDomainToUiMapper
+import com.sa.githubers.ui.mapper.UserListDomainToUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,18 +12,18 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 class UiModule {
     @Provides
-    fun providesUserListDomainUiMapper(): UsersDomainUiMapper {
-        return UsersDomainUiMapper()
+    fun providesUserListDomainUiMapper(): UserListDomainToUiMapper {
+        return UserListDomainToUiMapper()
     }
 
     @Provides
-    fun providesUserDetailsDomainUiMapper(): UserDetailsDomainUiMapper {
-        return UserDetailsDomainUiMapper()
+    fun providesUserDetailsDomainUiMapper(): UserDetailsDomainToUiMapper {
+        return UserDetailsDomainToUiMapper()
     }
 
     @Provides
-    fun providesUserRepoDomainUiMapper(): UserRepoDomainUiMapper {
-        return UserRepoDomainUiMapper()
+    fun providesUserRepoDomainUiMapper(): UserRepoDomainToUiMapper {
+        return UserRepoDomainToUiMapper()
     }
 
 }

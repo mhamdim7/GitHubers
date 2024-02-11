@@ -26,7 +26,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.sa.githubers.R
 import com.sa.githubers.ui.theme.dimens
 

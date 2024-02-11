@@ -23,12 +23,12 @@ import com.sa.githubers.ui.components.InfinitelyFlowingCircles
 import com.sa.githubers.ui.components.ProgressLoader
 import com.sa.githubers.ui.components.SearchFieldComponent
 import com.sa.githubers.ui.components.UsersList
-import com.sa.githubers.ui.viewmodel.UsersViewModel
+import com.sa.githubers.ui.viewmodel.UserListViewModel
 
 @Composable
 fun UsersScreen(
     navigateToDetails: (login: String) -> Unit,
-    viewModel: UsersViewModel = hiltViewModel()
+    viewModel: UserListViewModel = hiltViewModel()
 ) {
     val searchText by viewModel.searchText.collectAsState()
     val usersResponse by viewModel.users.collectAsState()

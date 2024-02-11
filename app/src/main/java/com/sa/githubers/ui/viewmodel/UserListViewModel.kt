@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.sa.githubers.AppConstants.THROTTLE_DURATION
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.domain.usecases.UserListUseCase
+import com.sa.githubers.ui.mapper.UserListDomainToUiMapper
 import com.sa.githubers.ui.model.UserItemUiModel
-import com.sa.githubers.ui.mapper.UsersDomainUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UsersViewModel @Inject constructor(
+class UserListViewModel @Inject constructor(
     private val userListUseCase: UserListUseCase,
-    private val mapper: UsersDomainUiMapper
+    private val mapper: UserListDomainToUiMapper
 ) : ViewModel() {
 
     private val _users = MutableStateFlow<ResourceState<List<UserItemUiModel>>>(

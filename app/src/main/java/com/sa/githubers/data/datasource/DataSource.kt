@@ -2,9 +2,9 @@ package com.sa.githubers.data.datasource
 
 import com.sa.githubers.data.NetworkResult
 import com.sa.githubers.data.api.ApiService
-import com.sa.githubers.data.mapper.UserDetailsDataDomainMapper
-import com.sa.githubers.data.mapper.UserListDataDomainMapper
-import com.sa.githubers.data.mapper.UserRepoDataDomainMapper
+import com.sa.githubers.data.mapper.UserDetailsDataToDomainMapper
+import com.sa.githubers.data.mapper.UserListDataToDomainMapper
+import com.sa.githubers.data.mapper.UserRepoDataToDomainMapper
 import com.sa.githubers.data.networkResult
 import com.sa.githubers.domain.model.UserDetails
 import com.sa.githubers.domain.model.UserItem
@@ -19,9 +19,9 @@ interface DataSource {
 
 class DataSourceImpl @Inject constructor(
     private val apiService: ApiService,
-    private val userListMapper: UserListDataDomainMapper,
-    private val userDetailsMapper: UserDetailsDataDomainMapper,
-    private val userRepoMapper: UserRepoDataDomainMapper,
+    private val userListMapper: UserListDataToDomainMapper,
+    private val userDetailsMapper: UserDetailsDataToDomainMapper,
+    private val userRepoMapper: UserRepoDataToDomainMapper,
 ) : DataSource {
 
     override suspend fun getUserList(query: String) = networkResult {

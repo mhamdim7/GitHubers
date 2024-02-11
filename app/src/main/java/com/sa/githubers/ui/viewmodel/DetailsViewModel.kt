@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sa.githubers.domain.resourceloader.ResourceState
 import com.sa.githubers.domain.usecases.UserDetailUseCase
-import com.sa.githubers.ui.mapper.UserDetailsDomainUiMapper
-import com.sa.githubers.ui.mapper.UserRepoDomainUiMapper
+import com.sa.githubers.ui.mapper.UserDetailsDomainToUiMapper
+import com.sa.githubers.ui.mapper.UserRepoDomainToUiMapper
 import com.sa.githubers.ui.model.UserDetailsUiModel
 import com.sa.githubers.ui.model.UserRepoUiModel
 import com.sa.githubers.ui.navigation.Routes
@@ -22,8 +22,8 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCase: UserDetailUseCase,
-    private val userDetailsMapper: UserDetailsDomainUiMapper,
-    private val userRepoMapper: UserRepoDomainUiMapper
+    private val userDetailsMapper: UserDetailsDomainToUiMapper,
+    private val userRepoMapper: UserRepoDomainToUiMapper
 ) : ViewModel() {
 
 
