@@ -1,8 +1,8 @@
 package com.sa.githubers.di
 
-import com.sa.githubers.ui.mapper.UserDetailsDomainToUiMapper
-import com.sa.githubers.ui.mapper.UserRepoDomainToUiMapper
-import com.sa.githubers.ui.mapper.UserListDomainToUiMapper
+import com.sa.githubers.presentation.mapper.UserDetailsDomainToUiMapper
+import com.sa.githubers.presentation.mapper.UserRepoDomainToUiMapper
+import com.sa.githubers.presentation.mapper.UserListDomainToUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
